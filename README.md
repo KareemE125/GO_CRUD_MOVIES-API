@@ -1,11 +1,13 @@
 # GO_CRUD_MOVIES-API
+
 That projects implements a Go server that provides CRUD APIs like: create, get, update and delete movies
 
 That was created by 100% by GO-Lang
 
-=== Instructions ===
 
-To be able to have the .css files working, you should run:
+# INSTRUCTIONS TO FOLLOW:
+
+To be able to have the .css files working, you have to run these commands in the terminal:
 
 (1) go get github.com/GeertJohan/go.rice
 

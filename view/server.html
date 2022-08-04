@@ -4,9 +4,120 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style_server.css">
     <title>Server</title>
 </head>
 <body>
-    <h1>SERVER</h1>
+    <header style="text-align: center;">
+        <h1>Welcome To The Server</h1>
+    </header>
+    <br><br>
+    <h2>Our Services:</h2>
+    <table>
+        <tr>
+            <td>
+                <a href="http://localhost:5000/movies" target="_blank">
+                    <button>Show All Movies</button>
+                </a>
+            </td>    
+            <td>
+                <a href="#createForm">
+                    <button>Create a Movie</button>
+                </a>
+            </td>    
+            <td>
+                <a href="#updateForm">
+                    <button>Update a Movie</button>
+                </a>
+            </td>    
+            <td>
+                <a href="#deleteForm">
+                    <button>Delete a Movie</button>
+                </a>
+            </td>    
+            <td>
+                <a href="#getForm">
+                    <button>Get a Movie</button>
+                </a>
+            </td>    
+        </tr>
+    </table>
+    <br><br>
+    <br><hr>
+    <form id="createForm" action="http://localhost:5000/movie/create" method="POST"  target="_blank">
+        <fieldset>
+            <legend><h2>Create a MOVIE</h2></legend>
+
+            <input type="text" name="id" value="0" hidden>
+
+            <label for="title">Title:&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</label>
+            <input type="text" name="title" id="title">
+            <br><br>
+
+            <label for="dircName">Director Name: &nbsp; </label>
+            <input type="text" name="dircName" id="dircName">
+            <br><br>
+            <br><br>
+
+            <button id="formBtn" type="submit">
+                CREATE
+            </button>
+        </fieldset>
+    </form>
+    <br><hr>
+    <form id="updateForm" action="http://localhost:5000/movie/update" method="POST"  target="_blank">
+        <fieldset>
+            <legend><h2>Update a MOVIE</h2></legend>
+
+            <label for="id">Movie ID:&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </label>
+            <input type="text" name="id" id="id">
+            <br><br>
+
+            <label for="title">New Title:&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</label>
+            <input type="text" name="title" id="title">
+            <br><br>
+
+            <label for="dircName">New Director Name: &nbsp; </label>
+            <input type="text" name="dircName" id="dircName">
+            <br><br>
+            <br><br>
+
+            <button id="formBtn" type="submit">
+                UPDATE
+            </button>
+        </fieldset>
+    </form>
+    <br><hr>
+    <form id="deleteForm" action="http://localhost:5000/movie/delete" method="POST"  target="_blank">
+        <fieldset>
+            <legend><h2>Delete a MOVIE</h2></legend>
+
+            <label for="id">Movie ID:&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </label>
+            <input type="text" name="id" id="id">
+            <br><br>
+            <br><br>
+
+            <button id="formBtn" type="submit">
+                DELETE
+            </button>
+        </fieldset>
+    </form>
+    <br><hr>
+    <form id="getForm" action="http://localhost:5000/movie/get" method="GET"  target="_blank">
+        <fieldset>
+            <legend><h2>Get a MOVIE</h2></legend>
+
+            <label for="id">Movie ID:&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </label>
+            <input type="text" name="id" id="id">
+            <br><br>
+            <br><br>
+
+            <button id="formBtn" type="submit">
+                GET
+            </button>
+        </fieldset>
+    </form>
+    <br><hr><br>
 </body>
 </html>
+

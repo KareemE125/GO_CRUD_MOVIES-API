@@ -6,8 +6,9 @@ import (
 	"log"
 	"net/http"
 	"strconv"
-	"github.com/gorilla/mux"
+
 	rice "github.com/GeertJohan/go.rice"
+	"github.com/gorilla/mux"
 )
 
 type Movie struct {
@@ -32,16 +33,16 @@ func main() {
 	// Setting-up our routes and their handlers
 	r := mux.NewRouter()
 
-	r.PathPrefix("/").Handler(http.FileServer(rice.MustFindBox("view").HTTPBox()))
-	//r.Handle("/", http.FileServer(http.Dir("./view")))
-
-	r.HandleFunc("/movies", createMovie).Methods("POST")
-	r.HandleFunc("/movie/{id}", getMovie).Methods("GET")
-	r.HandleFunc("/movie/{id}", updateMovie).Methods("PUT")
-	r.HandleFunc("/movie/{id}", deleteMovie).Methods("DELETE")
+	r.HandleFunc("/movie/create", createMovie).Methods("POST")
+	r.HandleFunc("/movie/get", getMovie).Methods("GET")
+	r.HandleFunc("/movie/update", updateMovie).Methods("POST")
+	r.HandleFunc("/movie/delete", deleteMovie).Methods("POST")
 	r.HandleFunc("/movies", getAllMovies).Methods("GET")
 
-	fmt.Println("===> STARTING SERVER ON PORT: 3000")
+	r.PathPrefix("/").Handler(http.FileServer(rice.MustFindBox("view").HTTPBox()))
+
+
+	fmt.Println("===> STARTING SERVER ON PORT: 5000")
 
 	// Operating the server with the created handler "r"
 	if err := http.ListenAndServe(":5000", r); err != nil {
@@ -63,12 +64,13 @@ func getAllMovies(w http.ResponseWriter, r *http.Request) {
 }
 
 func deleteMovie(w http.ResponseWriter, r *http.Request) {
+
 	w.Header().Add("Content-type", "application/json")
 
-	params := mux.Vars(r)
+	r.ParseForm()
 
 	for i, elem := range moviesList {
-		if params["id"] == elem.ID {
+		if r.FormValue("id") == elem.ID {
 			moviesList = append(moviesList[:i], moviesList[i+1:]...)
 			json.NewEncoder(w).Encode(moviesList)
 			return
@@ -78,12 +80,13 @@ func deleteMovie(w http.ResponseWriter, r *http.Request) {
 }
 
 func getMovie(w http.ResponseWriter, r *http.Request) {
+
 	w.Header().Add("Content-type", "application/json")
 
-	params := mux.Vars(r)
+	r.ParseForm()
 
 	for _, elem := range moviesList {
-		if params["id"] == elem.ID {
+		if r.FormValue("id") == elem.ID {
 			json.NewEncoder(w).Encode(elem)
 			return
 		}
@@ -92,10 +95,11 @@ func getMovie(w http.ResponseWriter, r *http.Request) {
 }
 
 func createMovie(w http.ResponseWriter, r *http.Request) {
+
 	w.Header().Set("Content-type", "application/json")
 
-	var newMovie Movie
-	json.NewDecoder(r.Body).Decode(&newMovie)
+	r.ParseForm()
+	newMovie := Movie{ID: r.FormValue("id"), Title: r.FormValue("title"), Director: &Director{Name: r.FormValue("dircName")}}
 
 	// ID is created by getting the last added movie's ID and incremented by 1
 	newId, _ := strconv.Atoi(moviesList[len(moviesList)-1].ID)
@@ -104,20 +108,19 @@ func createMovie(w http.ResponseWriter, r *http.Request) {
 	moviesList = append(moviesList, newMovie)
 
 	json.NewEncoder(w).Encode(newMovie)
+
 }
 
 func updateMovie(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-type", "application/json")
 
-	params := mux.Vars(r)
-	for i, elem := range moviesList {
-		if params["id"] == elem.ID {
-			json.NewDecoder(r.Body).Decode(&elem)
+	r.ParseForm()
 
-			// Replace the sent id by the real one
-			// as we only want to update its data with the id remianing the same
-			elem.ID = params["id"]
+	for i, elem := range moviesList {
+		if r.FormValue("id") == elem.ID {
+			elem.Title = r.FormValue("title")
+			elem.Director.Name = r.FormValue("dircName")
 			moviesList[i] = elem
 			json.NewEncoder(w).Encode(elem)
 			return

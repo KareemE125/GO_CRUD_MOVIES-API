@@ -1,0 +1,48 @@
+body{
+    
+    padding: 10px;
+    padding-left: 50px;
+    padding-right: 50px;
+    background-color: rgb(22, 19, 19);
+    color: blanchedalmond;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+header{
+    text-align: center; 
+}
+
+button{
+    color: rgb(250, 241, 227); 
+    font-size: 14px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    width: 200px; 
+    height: 60px;
+    font-size: 14px;
+    background-image: linear-gradient(to top, rgb(22, 19, 19) 0%, blanchedalmond 120%);
+}
+
+#formBtn{
+    width: 100px; 
+    height: 35px;
+}
+
+form
+{
+    text-align: center;
+}
+
+fieldset{
+    padding: 35px;  
+    width: fit-content; 
+    margin:auto;
+}
+
+table{
+    width: 100%;
+    padding-left: 25px;
+    padding-right: 25px;
+}

@@ -7,7 +7,9 @@ That was created by 100% by GO-Lang
 
 # INSTRUCTIONS TO FOLLOW:
 
-To be able to have the .css files working, you have to run these commands in the terminal:
+=> The server runs on Port "5000": http://localhost:5000
+
+=> To be able to have the .css files working, you have to run these commands in the terminal:
 
 (1) go get github.com/GeertJohan/go.rice
 

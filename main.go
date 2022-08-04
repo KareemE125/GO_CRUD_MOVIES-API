@@ -6,8 +6,8 @@ import (
 	"log"
 	"net/http"
 	"strconv"
-
 	"github.com/gorilla/mux"
+	rice "github.com/GeertJohan/go.rice"
 )
 
 type Movie struct {
@@ -31,6 +31,10 @@ func main() {
 
 	// Setting-up our routes and their handlers
 	r := mux.NewRouter()
+
+	r.PathPrefix("/").Handler(http.FileServer(rice.MustFindBox("view").HTTPBox()))
+	//r.Handle("/", http.FileServer(http.Dir("./view")))
+
 	r.HandleFunc("/movies", createMovie).Methods("POST")
 	r.HandleFunc("/movie/{id}", getMovie).Methods("GET")
 	r.HandleFunc("/movie/{id}", updateMovie).Methods("PUT")
@@ -40,10 +44,9 @@ func main() {
 	fmt.Println("===> STARTING SERVER ON PORT: 3000")
 
 	// Operating the server with the created handler "r"
-	if err := http.ListenAndServe(":3000", r); err != nil {
+	if err := http.ListenAndServe(":5000", r); err != nil {
 		log.Fatal("Can not connect to the server", err)
 	}
-
 }
 
 func initlizeMoviesList() {
